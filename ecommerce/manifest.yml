@@ -9,19 +9,19 @@ default_target: DCM_DEV_CLN
 
 targets:
   DCM_DEV_CLN:
-    account_identifier: "JJNSNLN-DEV_CLN"
+    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV_CLN
     project_owner: SYSADMIN
     templating_config: DEV_CLN
 
   DCM_DEV:
-    account_identifier: "JJNSNLN-DEV"
+    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV
     project_owner: SYSADMIN
     templating_config: DEV
 
   DCM_PROD:
-    account_identifier: "JJNSNLN-PROD"
+    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_PROD
     project_owner: SYSADMIN
     templating_config: PROD

@@ -1,2 +1,19 @@
--- Fichier réservé — étape suivante du POC
--- Contenu à venir : DEFINE USER SVC_ECOM_LOADER, SVC_ECOM_TRANSFORM, SVC_GITHUB_ACTIONS, ANA_MARTIN
+-- =============================================================================
+-- USERS : Non géré par DCM Projects
+-- =============================================================================
+-- DEFINE USER n'est PAS supporté par DCM Projects.
+--
+-- Stratégie de création des utilisateurs :
+--
+--   TYPE SERVICE (comptes de service)  → 1 PAR ENVIRONNEMENT
+--     Raison : isolation sécurité — credentials séparés par env.
+--     Ex : SVC_ECOM_LOADER_DEV_CLN / SVC_ECOM_LOADER_DEV / SVC_ECOM_LOADER (PROD)
+--
+--   TYPE PERSON (utilisateurs humains) → 1 SEUL COMPTE SNOWFLAKE
+--     Raison : une personne = un login. Les accès multi-env sont gérés
+--     par des GRANTs de rôles (ECOM_ANALYST_DEV_CLN, ECOM_ANALYST_DEV, ECOM_ANALYST).
+--
+-- Les utilisateurs sont créés via le script pre_scripts/01_create_users.sql,
+-- exécuté APRÈS DCM DEPLOY (warehouses et rôles doivent exister).
+-- Le warehouse DCM est utilisé pour l'exécution → traçabilité dans QUERY_HISTORY.
+-- =============================================================================
