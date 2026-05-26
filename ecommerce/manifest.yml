@@ -34,6 +34,7 @@ targets:
 
 templating:
   defaults:
+    env_suffix:        "_DEV_CLN"           # suffixe vide par défaut, surchargé par chaque config
     wh_size_loading:   "X-SMALL"
     wh_size_analytics: "X-SMALL"
     wh_size_transform: "X-SMALL"
