@@ -3,13 +3,11 @@
 -- =============================================================================
 -- Jinja variables injectées depuis manifest.yml (section templating) :
 --   {{ env_suffix }}        → "" (PROD) | "_DEV" (DEV)
---   {{ wh_size_loading }}   → "SMALL" (PROD) | "X-SMALL" (DEV)
---   {{ wh_size_transform }} → "SMALL" (PROD) | "X-SMALL" (DEV)
---   {{ wh_size_analytics }} → "MEDIUM" (PROD) | "X-SMALL" (DEV)
+--   {{ wh_size}}   → "SMALL" (PROD) | "X-SMALL" (DEV)
 --
 -- Objets créés par target :
---   PROD → ECOM_RAW_WH     | ECOM_TRANSFORM_WH     | ECOM_ANALYTICS_WH
---   DEV  → ECOM_RAW_WH_DEV | ECOM_TRANSFORM_WH_DEV | ECOM_ANALYTICS_WH_DEV
+--   PROD → ECOM_WH     
+--   DEV  → ECOM_WH_DEV
 -- =============================================================================
 
 
