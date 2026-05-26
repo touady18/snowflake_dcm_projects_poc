@@ -1,0 +1,40 @@
+name: "DCM 2) Plan on PR"
+
+# Déclenché automatiquement à chaque Pull Request vers main
+# Exécute DCM PLAN contre le target PROD et poste le résultat en commentaire PR
+# → Permet de prévisualiser les changements AVANT de merger
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: ["main"]
+    paths:
+      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
+  workflow_dispatch:
+
+permissions:
+  id-token: write       # authentification OIDC Snowflake
+  contents: read
+  pull-requests: write  # pour poster le résultat du PLAN en commentaire PR
+
+env:
+  DCM_PROJECT_PATH: ecommerce/
+  SNOWFLAKE_USER: SVC_GITHUB_ACTIONS
+
+jobs:
+  # DCM PLAN sur PROD : prévisualise ce que le merge dans main déploierait
+  # Le résultat (objets créés / modifiés / supprimés) est posté en commentaire PR
+  PLAN_PROD:
+    runs-on: ubuntu-latest
+    environment: DCM_PROD
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        id: plan
+        with:
+          target: DCM_PROD
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          comment-on-pr: "true"   # poste le plan_result.json en commentaire PR

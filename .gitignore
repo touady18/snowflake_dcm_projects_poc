@@ -1,0 +1,19 @@
+# DCM Projects — dossier généré automatiquement par DCM ANALYZE (ne jamais commiter)
+/ecommerce/out/
+
+# Fichier local avec les vraies valeurs d'account_identifier (ne jamais commiter)
+ecommerce/manifest.local.yml
+
+# Variables d'environnement locales
+.env
+*.env.local
+
+# Snowflake CLI
+.snowflake/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+/logs/

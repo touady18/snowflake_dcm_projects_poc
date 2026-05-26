@@ -1,0 +1,76 @@
+name: "DCM 3) Deploy DEV then PROD"
+
+# Déclenché automatiquement à chaque push sur main (après merge d'une PR)
+# Pipeline séquentiel : DEV d'abord, PROD uniquement si DEV réussit
+# → Garantit que les changements sont validés en DEV avant la production
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
+  workflow_dispatch:
+
+permissions:
+  id-token: write       # authentification OIDC Snowflake
+  contents: read
+  pull-requests: write  # pour poster les résultats en commentaire
+
+env:
+  DCM_PROJECT_PATH: ecommerce/
+  SNOWFLAKE_USER: SVC_GITHUB_ACTIONS
+
+jobs:
+  # ── ÉTAPE 1 : Déploiement sur DEV ─────────────────────────────────────────
+  DEV:
+    runs-on: ubuntu-latest
+    environment: DCM_DEV
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        id: plan
+        with:
+          target: DCM_DEV
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          comment-on-pr: "true"
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
+        id: deploy
+        with:
+          target: DCM_DEV
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          allow-drops: "false"          # sécurité : refuse les DROP sans validation explicite
+          post-scripts-path: "post_scripts"
+          comment-on-pr: "true"
+
+  # ── ÉTAPE 2 : Déploiement sur PROD (conditionné au succès de DEV) ─────────
+  PROD:
+    needs: DEV            # PROD ne démarre QUE si DEV réussit entièrement
+    runs-on: ubuntu-latest
+    environment: DCM_PROD # ← ajouter des "required reviewers" ici dans GitHub pour gate manuel
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        id: plan
+        with:
+          target: DCM_PROD
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          comment-on-pr: "true"
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
+        id: deploy
+        with:
+          target: DCM_PROD
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          allow-drops: "false"
+          post-scripts-path: "post_scripts"
+          comment-on-pr: "true"

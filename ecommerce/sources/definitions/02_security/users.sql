@@ -1,0 +1,2 @@
+-- Fichier réservé — étape suivante du POC
+-- Contenu à venir : DEFINE USER SVC_ECOM_LOADER, SVC_ECOM_TRANSFORM, SVC_GITHUB_ACTIONS, ANA_MARTIN

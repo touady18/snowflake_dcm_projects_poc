@@ -1,0 +1,49 @@
+name: "DCM 1) Test Connections"
+
+# Déclenchement MANUEL uniquement depuis GitHub Actions > Run workflow
+# Permet de valider la connectivité Snowflake avant tout déploiement
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # requis pour l'authentification OIDC avec Snowflake
+  contents: read
+
+env:
+  DCM_PROJECT_PATH: ecommerce/                   # chemin depuis la racine du repo
+  SNOWFLAKE_USER: SVC_GITHUB_ACTIONS             # compte de service CI/CD (sans suffixe env)
+
+jobs:
+  # ── Étape 1 : lecture du manifest pour extraire la liste des targets ───────
+  PARSE_MANIFEST:
+    runs-on: ubuntu-latest
+    outputs:
+      targets: ${{ steps.manifest.outputs.targets }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-parse-manifest@v1
+        id: manifest
+        with:
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+
+  # ── Étape 2 : test de connectivité pour chaque target (DCM_DEV, DCM_PROD) ─
+  CONNECTION_TEST:
+    needs: PARSE_MANIFEST
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.PARSE_MANIFEST.outputs.targets) }}
+      fail-fast: false    # tester tous les targets même si l'un échoue
+    environment: ${{ matrix.target }}   # nom = target manifest = GitHub Environment
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-connection-test@v1
+        id: connect
+        with:
+          target: ${{ matrix.target }}
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}

@@ -1,0 +1,2 @@
+-- Fichier réservé — étape suivante du POC
+-- Contenu à venir : GRANT ROLE TO ROLE, GRANT USAGE ON WAREHOUSE, GRANT ROLE TO USER

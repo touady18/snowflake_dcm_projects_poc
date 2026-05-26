@@ -1,0 +1,58 @@
+manifest_version: 2
+type: DCM_PROJECT
+
+# Prérequis bootstrap (une seule fois par compte Snowflake) :
+#   CREATE DATABASE IF NOT EXISTS DCM_POC;
+#   CREATE SCHEMA  IF NOT EXISTS DCM_POC.PROJECTS;
+
+default_target: DCM_DEV_CLN
+
+targets:
+  DCM_DEV_CLN:
+    account_identifier: "<ORG>-<ACCOUNT_DEV_CLN>"    # valeur réelle dans manifest.local.yml
+    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV_CLN
+    project_owner: SYSADMIN
+    templating_config: DEV_CLN
+
+  DCM_DEV:
+    account_identifier: "<ORG>-<ACCOUNT_DEV>"         # valeur réelle dans manifest.local.yml
+    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV
+    project_owner: SYSADMIN
+    templating_config: DEV
+
+  DCM_PROD:
+    account_identifier: "<ORG>-<ACCOUNT_PROD>"        # valeur réelle dans manifest.local.yml
+    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_PROD
+    project_owner: SYSADMIN
+    templating_config: PROD
+
+# Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
+# Résultat :
+#   DEV_CLN → ECOM_LOADING_WH_DEV_CLN
+#   DEV     → ECOM_LOADING_WH_DEV
+#   PROD    → ECOM_LOADING_WH
+
+templating:
+  defaults:
+    wh_size_loading:   "X-SMALL"
+    wh_size_analytics: "X-SMALL"
+    wh_size_transform: "X-SMALL"
+
+  configurations:
+    DEV_CLN:
+      env_suffix:        "_DEV_CLN"       # Tous les objets auront le suffixe _DEV_CLN
+      wh_size_loading:   "X-SMALL"
+      wh_size_analytics: "X-SMALL"
+      wh_size_transform: "X-SMALL"
+
+    DEV:
+      env_suffix:        "_DEV"       # Tous les objets auront le suffixe _DEV
+      wh_size_loading:   "X-SMALL"
+      wh_size_analytics: "X-SMALL"
+      wh_size_transform: "X-SMALL"
+
+    PROD:
+      env_suffix:        ""           # Pas de suffixe en production
+      wh_size_loading:   "SMALL"
+      wh_size_analytics: "MEDIUM"
+      wh_size_transform: "SMALL"

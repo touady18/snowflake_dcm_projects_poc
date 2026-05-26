@@ -1,0 +1,2 @@
+-- Fichier réservé — étape suivante du POC
+-- Contenu à venir : DEFINE ROLE ECOM_ADMIN, ECOM_LOADER, ECOM_TRANSFORMER, ECOM_ANALYST
