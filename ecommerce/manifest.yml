@@ -9,19 +9,19 @@ default_target: DCM_DEV_CLN
 
 targets:
   DCM_DEV_CLN:
-    account_identifier: "<ORG>-<ACCOUNT_DEV_CLN>"    # valeur réelle dans manifest.local.yml
+    account_identifier: "JJNSNLN-DEV_CLN"
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV_CLN
     project_owner: SYSADMIN
     templating_config: DEV_CLN
 
   DCM_DEV:
-    account_identifier: "<ORG>-<ACCOUNT_DEV>"         # valeur réelle dans manifest.local.yml
+    account_identifier: "JJNSNLN-DEV"
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV
     project_owner: SYSADMIN
     templating_config: DEV
 
   DCM_PROD:
-    account_identifier: "<ORG>-<ACCOUNT_PROD>"        # valeur réelle dans manifest.local.yml
+    account_identifier: "JJNSNLN-PROD"
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_PROD
     project_owner: SYSADMIN
     templating_config: PROD
@@ -34,19 +34,19 @@ targets:
 
 templating:
   defaults:
-    env_suffix:        "_DEV_CLN"           # suffixe vide par défaut, surchargé par chaque config
+    env_suffix: "_DEV_CLN"           # suffixe vide par défaut, surchargé par chaque config
     wh_size:   "X-SMALL"
 
   configurations:
     DEV_CLN:
-      env_suffix:        "_DEV_CLN"       # Tous les objets auront le suffixe _DEV_CLN
+      env_suffix: "_DEV_CLN"       # Tous les objets auront le suffixe _DEV_CLN
       wh_size:   "X-SMALL"
 
     DEV:
-      env_suffix:        "_DEV"       # Tous les objets auront le suffixe _DEV
+      env_suffix: "_DEV"       # Tous les objets auront le suffixe _DEV
       wh_size:   "X-SMALL"
 
     PROD:
-      env_suffix:        ""           # Pas de suffixe en production
+      env_suffix: ""           # Pas de suffixe en production
       wh_size:   "SMALL"
    
