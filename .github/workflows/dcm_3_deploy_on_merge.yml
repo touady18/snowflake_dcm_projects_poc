@@ -4,10 +4,10 @@ name: "DCM 3) Deploy DEV then PROD"
 # Pipeline séquentiel : DEV d'abord, PROD uniquement si DEV réussit
 # → Garantit que les changements sont validés en DEV avant la production
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
+  # push:                                  # désactivé temporairement — OIDC non configuré
+  #   branches: ["main"]
+  #   paths:
+  #     - 'ecommerce/**'
   workflow_dispatch:
 
 permissions:

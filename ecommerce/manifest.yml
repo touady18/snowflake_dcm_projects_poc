@@ -28,32 +28,25 @@ targets:
 
 # Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
 # Résultat :
-#   DEV_CLN → ECOM_LOADING_WH_DEV_CLN
-#   DEV     → ECOM_LOADING_WH_DEV
-#   PROD    → ECOM_LOADING_WH
+#   DEV_CLN → ECOM_RAW_WH_DEV_CLN
+#   DEV     → ECOM_RAW_WH_DEV
+#   PROD    → ECOM_RAW_WH
 
 templating:
   defaults:
     env_suffix:        "_DEV_CLN"           # suffixe vide par défaut, surchargé par chaque config
-    wh_size_loading:   "X-SMALL"
-    wh_size_analytics: "X-SMALL"
-    wh_size_transform: "X-SMALL"
+    wh_size:   "X-SMALL"
 
   configurations:
     DEV_CLN:
       env_suffix:        "_DEV_CLN"       # Tous les objets auront le suffixe _DEV_CLN
-      wh_size_loading:   "X-SMALL"
-      wh_size_analytics: "X-SMALL"
-      wh_size_transform: "X-SMALL"
+      wh_size:   "X-SMALL"
 
     DEV:
       env_suffix:        "_DEV"       # Tous les objets auront le suffixe _DEV
-      wh_size_loading:   "X-SMALL"
-      wh_size_analytics: "X-SMALL"
-      wh_size_transform: "X-SMALL"
+      wh_size:   "X-SMALL"
 
     PROD:
       env_suffix:        ""           # Pas de suffixe en production
-      wh_size_loading:   "SMALL"
-      wh_size_analytics: "MEDIUM"
-      wh_size_transform: "SMALL"
+      wh_size:   "SMALL"
+   

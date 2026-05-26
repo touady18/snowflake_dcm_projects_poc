@@ -17,3 +17,5 @@ Thumbs.db
 
 # Logs
 /logs/
+
+.github/workflows/dcm_*.yml    # Ignorer les workflows GitHub Actions générés par DCM (optionnel, à adapter selon votre besoin)

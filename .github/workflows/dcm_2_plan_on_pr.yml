@@ -4,11 +4,11 @@ name: "DCM 2) Plan on PR"
 # Exécute DCM PLAN contre le target PROD et poste le résultat en commentaire PR
 # → Permet de prévisualiser les changements AVANT de merger
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: ["main"]
-    paths:
-      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
+  # pull_request:                          # désactivé temporairement — OIDC non configuré
+  #   types: [opened, synchronize, reopened]
+  #   branches: ["main"]
+  #   paths:
+  #     - 'ecommerce/**'
   workflow_dispatch:
 
 permissions:
