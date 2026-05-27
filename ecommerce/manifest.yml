@@ -2,21 +2,21 @@ manifest_version: 2
 type: DCM_PROJECT
 
 # Prérequis bootstrap (une seule fois par compte Snowflake) :
-#   CREATE DATABASE IF NOT EXISTS DCM_POC;
-#   CREATE SCHEMA  IF NOT EXISTS DCM_POC.PROJECTS;
+#   CREATE DATABASE IF NOT EXISTS DCM_DB_POC;
+#   CREATE SCHEMA  IF NOT EXISTS DCM_DB_POC.PROJECTS;
 
 default_target: DCM_DEV
 
 targets:
   DCM_DEV:
     account_identifier: "JJNSNLN-LE94669" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
-    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV
+    project_name: DCM_DB_POC.PROJECTS.ECOM_PROJECT_DEV
     project_owner: DCM_DEVELOPER_DEV
     templating_config: DEV
 
   DCM_PROD:
     account_identifier: "JJNSNLN-LE94669" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
-    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_PROD
+    project_name: DCM_DB_POC.PROJECTS.ECOM_PROJECT_PROD
     project_owner: DCM_DEPLOYER_PROD
     templating_config: PROD
 
