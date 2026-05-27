@@ -54,3 +54,8 @@ grant monitor on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEAL
 grant operate on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CRON to role ECOM_DATA{{ env_suffix }};
 grant monitor on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CHILD to role ECOM_ANALYST{{ env_suffix }};
 grant operate on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CHILD to role ECOM_DATA{{ env_suffix }};
+
+
+-- MONITOR in the project
+GRANT MONITOR ON DCM PROJECT DCM_DB_POC.PROJECTS.ECOM_PROJECT_DEV TO ROLE DCM_DEVELOPER_DEV;
+GRANT MONITOR ON DCM PROJECT DCM_DB_POC.PROJECTS.ECOM_PROJECT_PROD TO ROLE DCM_DEPLOYER_PROD;
