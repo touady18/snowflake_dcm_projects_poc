@@ -16,15 +16,15 @@ targets:
 
   DCM_PROD:
     account_identifier: "JJNSNLN-LE94669" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
-    project_name: DCM_DB_POC.PROJECTS.ECOM_PROJECT_PROD
+    project_name: DCM_DB_POC.PROJECTS.ECOM_PROJECT
     project_owner: DCM_DEPLOYER_PROD
     templating_config: PROD
 
 # Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
 # Résultat :
-#   DEV_CLN → ECOM_RAW_WH_DEV_CLN
 #   DEV     → ECOM_RAW_WH_DEV
 #   PROD    → ECOM_RAW_WH
+
 
 templating:
   defaults:
