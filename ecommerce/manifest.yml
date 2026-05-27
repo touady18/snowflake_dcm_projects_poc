@@ -22,9 +22,9 @@ targets:
 
 # Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
 # Résultat :
-#   DEV_CLN → ECOM_RAW_WH_DEV_CLN
 #   DEV     → ECOM_RAW_WH_DEV
 #   PROD    → ECOM_RAW_WH
+
 
 templating:
   defaults:
