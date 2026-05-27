@@ -37,19 +37,20 @@ grant operate on warehouse ECOM_WH{{ env_suffix }} to role ECOM_ADMIN{{ env_suff
 
 -- Database / Schema e-commerce
 grant usage on database ECOM_DB{{ env_suffix }} to role ECOM_ANALYST{{ env_suffix }};
+grant usage on database ECOM_DB{{ env_suffix }} to role ECOM_DATA{{ env_suffix }};
 grant usage on schema   ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }} to role ECOM_ANALYST{{ env_suffix }};
 grant usage on schema   ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }} to role ECOM_DATA{{ env_suffix }};
 
 -- -----------------------------------------------------------------------------
--- 3) Privilèges procedures / tasks (a activer quand les objets existent)
+-- 3) Privilèges procedures / tasks
 -- -----------------------------------------------------------------------------
 
 -- Procedures
--- grant usage on procedure ECOM{{ env_suffix }}.MART.SP_HEALTHCHECK() to role ECOM_ANALYST{{ env_suffix }};
-grant usage on procedure ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.SP_PY_DCM_PROBE() to role ECOM_DATA{{ env_suffix }};
+grant usage on procedure ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.SP_HEALTHCHECK() to role ECOM_ANALYST{{ env_suffix }};
+grant usage on procedure ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.SP_HEALTHCHECK() to role ECOM_DATA{{ env_suffix }};
 
 -- Tasks
--- grant monitor on task ECOM{{ env_suffix }}.MART.TASK_HEALTHCHECK_CRON to role ECOM_ANALYST{{ env_suffix }};
--- grant operate on task ECOM{{ env_suffix }}.MART.TASK_HEALTHCHECK_CRON to role ECOM_DATA{{ env_suffix }};
--- grant monitor on task ECOM{{ env_suffix }}.MART.TASK_HEALTHCHECK_CHILD to role ECOM_ANALYST{{ env_suffix }};
--- grant operate on task ECOM{{ env_suffix }}.MART.TASK_HEALTHCHECK_CHILD to role ECOM_DATA{{ env_suffix }};
+grant monitor on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CRON to role ECOM_ANALYST{{ env_suffix }};
+grant operate on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CRON to role ECOM_DATA{{ env_suffix }};
+grant monitor on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CHILD to role ECOM_ANALYST{{ env_suffix }};
+grant operate on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CHILD to role ECOM_DATA{{ env_suffix }};
