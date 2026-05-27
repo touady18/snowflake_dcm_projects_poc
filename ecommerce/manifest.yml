@@ -5,25 +5,19 @@ type: DCM_PROJECT
 #   CREATE DATABASE IF NOT EXISTS DCM_POC;
 #   CREATE SCHEMA  IF NOT EXISTS DCM_POC.PROJECTS;
 
-default_target: DCM_DEV_CLN
+default_target: DCM_DEV
 
 targets:
-  DCM_DEV_CLN:
-    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
-    project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV_CLN
-    project_owner: SYSADMIN
-    templating_config: DEV_CLN
-
   DCM_DEV:
-    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
+    account_identifier: "JJNSNLN-LE94669" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_DEV
-    project_owner: SYSADMIN
+    project_owner: DCM_DEVELOPER_DEV
     templating_config: DEV
 
   DCM_PROD:
-    account_identifier: "<org>-<account>" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
+    account_identifier: "JJNSNLN-LE94669" # SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME();
     project_name: DCM_POC.PROJECTS.ECOM_PROJECT_PROD
-    project_owner: SYSADMIN
+    project_owner: DCM_DEPLOYER_PROD
     templating_config: PROD
 
 # Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
@@ -34,14 +28,10 @@ targets:
 
 templating:
   defaults:
-    env_suffix: "_DEV_CLN"           # suffixe vide par défaut, surchargé par chaque config
+    env_suffix: "_DEV"           # suffixe vide par défaut, surchargé par chaque config
     wh_size:   "X-SMALL"
 
   configurations:
-    DEV_CLN:
-      env_suffix: "_DEV_CLN"       # Tous les objets auront le suffixe _DEV_CLN
-      wh_size:   "X-SMALL"
-
     DEV:
       env_suffix: "_DEV"       # Tous les objets auront le suffixe _DEV
       wh_size:   "X-SMALL"

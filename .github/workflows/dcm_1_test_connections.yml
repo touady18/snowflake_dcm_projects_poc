@@ -11,7 +11,7 @@ permissions:
 
 env:
   DCM_PROJECT_PATH: ecommerce/                   # chemin depuis la racine du repo
-  SNOWFLAKE_USER: SVC_GITHUB_ACTIONS             # compte de service CI/CD (sans suffixe env)
+  SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}     # défini par environment GitHub (DCM_DEV ou DCM_PROD)
 
 jobs:
   # ── Étape 1 : lecture du manifest pour extraire la liste des targets ───────

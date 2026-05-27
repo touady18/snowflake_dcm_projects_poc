@@ -4,11 +4,11 @@ name: "DCM 2) Plan on PR"
 # Exécute DCM PLAN contre le target PROD et poste le résultat en commentaire PR
 # → Permet de prévisualiser les changements AVANT de merger
 on:
-  # pull_request:                          # désactivé temporairement — OIDC non configuré
-  #   types: [opened, synchronize, reopened]
-  #   branches: ["main"]
-  #   paths:
-  #     - 'ecommerce/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: ["main"]
+    paths:
+      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
   workflow_dispatch:
 
 permissions:
@@ -18,7 +18,7 @@ permissions:
 
 env:
   DCM_PROJECT_PATH: ecommerce/
-  SNOWFLAKE_USER: SVC_GITHUB_ACTIONS
+  SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}     # défini par environment GitHub (DCM_PROD)
 
 jobs:
   # DCM PLAN sur PROD : prévisualise ce que le merge dans main déploierait
