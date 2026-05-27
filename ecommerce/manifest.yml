@@ -30,13 +30,16 @@ templating:
   defaults:
     env_suffix: "_DEV"           # suffixe vide par défaut, surchargé par chaque config
     wh_size:   "X-SMALL"
+    owner : DCM_DEVELOPER_DEV
 
   configurations:
     DEV:
       env_suffix: "_DEV"       # Tous les objets auront le suffixe _DEV
       wh_size:   "X-SMALL"
+      owner : DCM_DEVELOPER_DEV
 
     PROD:
       env_suffix: ""           # Pas de suffixe en production
       wh_size:   "SMALL"
+      owner : DCM_DEPLOYER_PROD
    

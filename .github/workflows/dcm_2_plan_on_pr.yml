@@ -18,7 +18,6 @@ permissions:
 
 env:
   DCM_PROJECT_PATH: ecommerce/
-  SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}     # défini par environment GitHub (DCM_PROD)
 
 jobs:
   # DCM PLAN sur PROD : prévisualise ce que le merge dans main déploierait
@@ -36,5 +35,5 @@ jobs:
         with:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_PROD du job
           comment-on-pr: "true"   # poste le plan_result.json en commentaire PR

@@ -17,7 +17,6 @@ permissions:
 
 env:
   DCM_PROJECT_PATH: ecommerce/
-  SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}     # défini par environment GitHub (DCM_DEV ou DCM_PROD)
 
 jobs:
   # ── ÉTAPE 1 : Déploiement sur DEV ─────────────────────────────────────────
@@ -34,7 +33,7 @@ jobs:
         with:
           target: DCM_DEV
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_DEV
           comment-on-pr: "true"
 
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
@@ -42,7 +41,7 @@ jobs:
         with:
           target: DCM_DEV
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_DEV
           allow-drops: "false"          # sécurité : refuse les DROP sans validation explicite
           post-scripts-path: "post_scripts"
           comment-on-pr: "true"
@@ -62,7 +61,7 @@ jobs:
         with:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_PROD
           comment-on-pr: "true"
 
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
@@ -70,7 +69,7 @@ jobs:
         with:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_PROD
           allow-drops: "false"
           post-scripts-path: "post_scripts"
           comment-on-pr: "true"

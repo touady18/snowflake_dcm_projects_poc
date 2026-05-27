@@ -11,7 +11,6 @@ permissions:
 
 env:
   DCM_PROJECT_PATH: ecommerce/                   # chemin depuis la racine du repo
-  SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}     # défini par environment GitHub (DCM_DEV ou DCM_PROD)
 
 jobs:
   # ── Étape 1 : lecture du manifest pour extraire la liste des targets ───────
@@ -46,4 +45,4 @@ jobs:
         with:
           target: ${{ matrix.target }}
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment GitHub du job
