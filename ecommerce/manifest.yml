@@ -1,7 +1,7 @@
 manifest_version: 2
 type: DCM_PROJECT
 
-# Prérequis bootstrap (une seule fois par compte Snowflake) :
+# Bootstrap prerequisites (once per Snowflake account) :
 #   CREATE DATABASE IF NOT EXISTS DCM_DB_POC;
 #   CREATE SCHEMA  IF NOT EXISTS DCM_DB_POC.PROJECTS;
 
@@ -20,26 +20,25 @@ targets:
     project_owner: DCM_DEPLOYER_PROD
     templating_config: PROD
 
-# Variables Jinja injectées dans les fichiers SQL via {{ variable_name }}
-# Résultat :
-#   DEV_CLN → ECOM_RAW_WH_DEV_CLN
-#   DEV     → ECOM_RAW_WH_DEV
-#   PROD    → ECOM_RAW_WH
+# Jinja variables injected into SQL files via {{ variable_name }}
+# Result :
+#   DEV     → ECOM_WH_DEV
+#   PROD    → ECOM_WH
 
 templating:
   defaults:
-    env_suffix: "_DEV"           # suffixe vide par défaut, surchargé par chaque config
+    env_suffix: "_DEV"           # empty suffix by default, overridden by each config
     wh_size:   "X-SMALL"
     owner : DCM_DEVELOPER_DEV
 
   configurations:
     DEV:
-      env_suffix: "_DEV"       # Tous les objets auront le suffixe _DEV
+      env_suffix: "_DEV"       # All objects will have the _DEV suffix
       wh_size:   "X-SMALL"
       owner : DCM_DEVELOPER_DEV
 
     PROD:
-      env_suffix: ""           # Pas de suffixe en production
+      env_suffix: ""           # No suffix in production
       wh_size:   "SMALL"
       owner : DCM_DEPLOYER_PROD
    

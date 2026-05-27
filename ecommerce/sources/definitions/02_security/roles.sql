@@ -1,17 +1,17 @@
 -- =============================================================================
--- ROLES : Sécurité e-commerce — hiérarchie des rôles fonctionnels
+-- ROLES : E-commerce security — functional role hierarchy
 -- =============================================================================
--- Note : DEFINE USER n'est pas supporté par DCM Projects.
---        Les users sont créés en dehors du projet (manuellement ou pre-deploy script).
---        Les rôles sont créés ici.
---        Les GRANTs (rôle->rôle, privilèges objets) sont centralisés dans 08_grants/grants.sql.
+-- Note : DEFINE USER is not supported by DCM Projects.
+--        Users are created outside the project (manually or via pre-deploy script).
+--        Roles are created here.
+--        GRANTs (role->role, object privileges) are centralised in 08_grants/grants.sql.
 -- =============================================================================
 
--- Rôle administrateur du domaine e-commerce (ownership complet)
+-- E-commerce domain administrator role (full ownership)
 define role ECOM_ADMIN{{ env_suffix }};
 
--- Rôle dédié à l'équipe DATA
+-- Role dedicated to the DATA team
 define role ECOM_DATA{{ env_suffix }};
 
--- Rôle dédié aux analysts
+-- Role dedicated to analysts
 define role ECOM_ANALYST{{ env_suffix }};

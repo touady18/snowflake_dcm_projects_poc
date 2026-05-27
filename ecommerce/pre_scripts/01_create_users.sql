@@ -1,21 +1,21 @@
 -- =============================================================================
--- PRÉ-DÉPLOIEMENT : Création des utilisateurs Snowflake
+-- PRE-DEPLOYMENT : Snowflake user creation
 -- =============================================================================
--- Ce script est exécuté MANUELLEMENT après DCM DEPLOY.
--- Prérequis : warehouses et rôles doivent déjà exister (créés par DCM).
+-- This script is executed MANUALLY after DCM DEPLOY.
+-- Prerequisites: warehouses and roles must already exist (created by DCM).
 --
--- Pourquoi utiliser le warehouse DCM pour exécuter ce script ?
---   → Toutes les CREATE USER / GRANT apparaissent dans QUERY_HISTORY avec
---     le warehouse comme dimension → permet des audits par environnement.
+-- Why use the DCM warehouse to run this script?
+--   → All CREATE USER / GRANT statements appear in QUERY_HISTORY with
+--     the warehouse as a dimension → enables per-environment audits.
 --
--- Ordre d'exécution global :
---   1. EXECUTE DCM PROJECT ... DEPLOY ...     (crée WH + rôles)
---   2. Exécuter CE script                     (crée users + grants)
+-- Global execution order:
+--   1. EXECUTE DCM PROJECT ... DEPLOY ...     (creates WH + roles)
+--   2. Run THIS script                        (creates users + grants)
 -- =============================================================================
 
--- ── Étape 0 : Choisir le warehouse de l'environnement cible ──────────────────
+-- ── Step 0: Choose the target environment warehouse ──────────────────────────
 -- Décommenter UNE SEULE ligne selon l'environnement déployé.
--- Le warehouse utilisé apparaîtra dans QUERY_HISTORY pour l'audit.
+-- The warehouse used will appear in QUERY_HISTORY for auditing.
 
 
 -- USE WAREHOUSE ECOM_WH_DEV_CLN;   -- ← DEV_CLN
@@ -24,9 +24,9 @@
 
 
 -- =============================================================================
--- COMPTES DE SERVICE  (TYPE = SERVICE)
--- Un compte de service par environnement — isolation des credentials par env.
--- Nommage : SVC_<FONCTION>_<ENV_SUFFIX>   (PROD : pas de suffixe)
+-- SERVICE ACCOUNTS  (TYPE = SERVICE)
+-- One service account per environment — isolated credentials per env.
+-- Naming: SVC_<FUNCTION>_<ENV_SUFFIX>   (PROD: no suffix)
 -- =============================================================================
 
 -- ── Ingestion des données brutes (Fivetran, Airbyte, COPY INTO) ───────────────
@@ -49,9 +49,9 @@ CREATE USER IF NOT EXISTS SVC_ECOM_TRANSFORMER_DEV_CLN  -- PROD → SVC_ECOM_TRA
   DEFAULT_WAREHOUSE = 'ECOM_WH_DEV_CLN'
   TYPE              = SERVICE;
 
--- ── CI/CD GitHub Actions (déploiement automatisé — compte unique partagé) ─────
--- Note : SVC_GITHUB_ACTIONS est partagé entre envs car GitHub Actions
---        s'authentifie via OIDC et change de rôle selon le target déployé.
+-- ── CI/CD GitHub Actions (automated deployment — single shared account) ──────────
+-- Note : SVC_GITHUB_ACTIONS is shared across envs because GitHub Actions
+--        authenticates via OIDC and switches roles based on the deployed target.
 
 CREATE USER IF NOT EXISTS SVC_GITHUB_ACTIONS
   EMAIL             = 'svc-github-actions@company.com'
@@ -63,9 +63,9 @@ CREATE USER IF NOT EXISTS SVC_GITHUB_ACTIONS
 
 
 -- =============================================================================
--- UTILISATEURS PERSONNES  (TYPE = PERSON)
--- Un seul compte Snowflake par personne — les accès multi-env sont gérés
--- par des GRANTs de rôles (voir section GRANTS ci-dessous).
+-- PERSON USERS  (TYPE = PERSON)
+-- One Snowflake account per person — multi-env access is managed
+-- via role GRANTs (see GRANTS section below).
 -- =============================================================================
 
 
@@ -80,12 +80,12 @@ CREATE USER IF NOT EXISTS ANA_MARTIN
   TYPE              = PERSON
   MUST_CHANGE_PASSWORD = TRUE;
 
--- Template générique — dupliquer pour chaque nouvelle personne :
--- CREATE USER IF NOT EXISTS <PRENOM_NOM>
---   EMAIL             = '<prenom.nom@company.com>'
---   DISPLAY_NAME      = '<Prénom Nom>'
---   FIRST_NAME        = '<Prénom>'
---   LAST_NAME         = '<Nom>'
+-- Generic template — duplicate for each new person :
+-- CREATE USER IF NOT EXISTS <FIRST_LAST>
+--   EMAIL             = '<first.last@company.com>'
+--   DISPLAY_NAME      = '<First Last>'
+--   FIRST_NAME        = '<First>'
+--   LAST_NAME         = '<Last>'
 --   LOGIN_NAME        = '<PRENOM_NOM>'
 --   DEFAULT_ROLE      = 'ECOM_ANALYST_DEV_CLN'
 --   DEFAULT_WAREHOUSE = 'ECOM_ANALYTICS_WH_DEV_CLN'
@@ -96,16 +96,16 @@ CREATE USER IF NOT EXISTS ANA_MARTIN
 -- =============================================================================
 
 -- =============================================================================
--- GRANTS SUR USERS :
--- Les GRANTs sur les users sont ici, car DCM échouerait si le user n'existe pas.
--- Les GRANTs sur les objets (warehouses, rôles, schémas...) sont dans grants.sql (DCM)
+-- GRANTS ON USERS :
+-- User GRANTs are here because DCM would fail if the user does not exist.
+-- Object GRANTs (warehouses, roles, schemas...) are in grants.sql (DCM)
 -- =============================================================================
 
--- Comptes de service DEV_CLN
+-- DEV_CLN service accounts
 GRANT ROLE ECOM_LOADER_DEV_CLN      TO USER SVC_ECOM_LOADER_DEV_CLN;
 GRANT ROLE ECOM_TRANSFORMER_DEV_CLN TO USER SVC_ECOM_TRANSFORMER_DEV_CLN;
 
--- Ana Martin : accès analytique — ajouter les lignes au fur et à mesure des déploiements
+-- Ana Martin: analytical access — add lines as deployments progress
 GRANT ROLE ECOM_ANALYST_DEV_CLN TO USER ANA_MARTIN;
--- GRANT ROLE ECOM_ANALYST_DEV    TO USER ANA_MARTIN;   -- décommenter après deploy DEV
--- GRANT ROLE ECOM_ANALYST        TO USER ANA_MARTIN;   -- décommenter après deploy PROD
+-- GRANT ROLE ECOM_ANALYST_DEV    TO USER ANA_MARTIN;   -- uncomment after DEV deploy
+-- GRANT ROLE ECOM_ANALYST        TO USER ANA_MARTIN;   -- uncomment after PROD deploy

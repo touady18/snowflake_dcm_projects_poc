@@ -1,8 +1,8 @@
 -- =============================================================================
--- PROCEDURES : DCM Projects (SQL uniquement)
+-- PROCEDURES : DCM Projects (SQL only)
 -- =============================================================================
--- DCM Projects supporte uniquement les procedures LANGUAGE SQL.
--- Les procedures Python/JavaScript doivent etre gerees hors DCM (script manuel).
+-- DCM Projects supports only LANGUAGE SQL procedures.
+-- Python/JavaScript procedures must be managed outside DCM (manual script).
 -- =============================================================================
 
 define procedure ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.SP_HEALTHCHECK()

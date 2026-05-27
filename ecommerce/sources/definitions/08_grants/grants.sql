@@ -1,36 +1,36 @@
 -- =============================================================================
--- GRANTS : Attributions de rôles et privilèges
+-- GRANTS : Role and privilege assignments
 -- =============================================================================
--- Ce fichier contient les GRANTs gérés par DCM Projects :
---   1) Hiérarchie des rôles (ROLE -> ROLE)
---   2) Privilèges sur objets (WAREHOUSE, DATABASE, SCHEMA, TABLE, ...)
+-- This file contains the GRANTs managed by DCM Projects :
+--   1) Role hierarchy (ROLE -> ROLE)
+--   2) Object privileges (WAREHOUSE, DATABASE, SCHEMA, TABLE, ...)
 --
 -- Important :
---   Les GRANT ROLE ... TO USER ne sont PAS gérés ici dans ce POC,
---   car les users sont créés manuellement hors DCM. Si un user n'existe pas,
---   le DEPLOY échoue.
+--   GRANT ROLE ... TO USER statements are NOT managed here in this POC,
+--   because users are created manually outside DCM. If a user does not exist,
+--   the DEPLOY will fail.
 -- =============================================================================
 
 -- -----------------------------------------------------------------------------
--- 1) Hiérarchie des rôles
+-- 1) Role hierarchy
 -- -----------------------------------------------------------------------------
 
--- DATA agrège les rôles techniques ingestion + transformation
+-- DATA aggregates the technical ingestion + transformation roles
 grant role ECOM_ANALYST{{ env_suffix }}      to role ECOM_DATA{{ env_suffix }};
 
--- ADMIN hérite des rôles métier/techniques
+-- ADMIN inherits the business/technical roles
 grant role ECOM_DATA{{ env_suffix }}    to role ECOM_ADMIN{{ env_suffix }};
 grant role ECOM_ANALYST{{ env_suffix }} to role ECOM_ADMIN{{ env_suffix }};
 
--- Visibilité de la hiérarchie domaine sous SYSADMIN
+-- Domain hierarchy visibility under SYSADMIN
 grant role ECOM_ADMIN{{ env_suffix }} to role SYSADMIN;
 
 
 -- -----------------------------------------------------------------------------
--- 2) Privilèges sur objets
+-- 2) Object privileges
 -- -----------------------------------------------------------------------------
 
--- Warehouse unique par environnement
+-- One warehouse per environment
 grant usage   on warehouse ECOM_WH{{ env_suffix }} to role ECOM_ANALYST{{ env_suffix }};
 grant monitor on warehouse ECOM_WH{{ env_suffix }} to role ECOM_DATA{{ env_suffix }};
 grant operate on warehouse ECOM_WH{{ env_suffix }} to role ECOM_ADMIN{{ env_suffix }};
@@ -42,7 +42,7 @@ grant usage on schema   ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }} to role
 grant usage on schema   ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }} to role ECOM_DATA{{ env_suffix }};
 
 -- -----------------------------------------------------------------------------
--- 3) Privilèges procedures / tasks
+-- 3) Procedure / task privileges
 -- -----------------------------------------------------------------------------
 
 -- Procedures

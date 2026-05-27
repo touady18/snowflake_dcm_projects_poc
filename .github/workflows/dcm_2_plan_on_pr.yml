@@ -1,28 +1,45 @@
 name: "DCM 2) Plan on PR"
 
-# Déclenché automatiquement à chaque Pull Request vers main
-# Exécute DCM PLAN contre le target PROD et poste le résultat en commentaire PR
-# → Permet de prévisualiser les changements AVANT de merger
+# PR → develop : DCM PLAN on DEV (previews changes before merging into develop)
+# PR → main    : DCM PLAN on PROD (previews changes before merging into main)
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: ["main"]
+    branches: ["main", "develop"]
     paths:
-      - 'ecommerce/**'    # ne se déclenche que si des fichiers DCM ont changé
+      - 'ecommerce/**'    # only triggers if DCM files have changed
   workflow_dispatch:
 
 permissions:
-  id-token: write       # authentification OIDC Snowflake
+  id-token: write       # Snowflake OIDC authentication
   contents: read
-  pull-requests: write  # pour poster le résultat du PLAN en commentaire PR
+  pull-requests: write  # to post the PLAN result as a PR comment
 
 env:
   DCM_PROJECT_PATH: ecommerce/
 
 jobs:
-  # DCM PLAN sur PROD : prévisualise ce que le merge dans main déploierait
-  # Le résultat (objets créés / modifiés / supprimés) est posté en commentaire PR
+  # DCM PLAN on DEV: previews what merging into develop would deploy
+  PLAN_DEV:
+    if: github.base_ref == 'develop'
+    runs-on: ubuntu-latest
+    environment: DCM_DEV
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        id: plan
+        with:
+          target: DCM_DEV
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
+          comment-on-pr: "true"
+
+  # DCM PLAN on PROD: previews what merging into main would deploy
   PLAN_PROD:
+    if: github.base_ref == 'main'
     runs-on: ubuntu-latest
     environment: DCM_PROD
     steps:
@@ -35,5 +52,5 @@ jobs:
         with:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment DCM_PROD du job
-          comment-on-pr: "true"   # poste le plan_result.json en commentaire PR
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_PROD environment
+          comment-on-pr: "true"

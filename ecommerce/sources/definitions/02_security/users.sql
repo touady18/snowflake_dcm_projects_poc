@@ -1,19 +1,19 @@
 -- =============================================================================
--- USERS : Non géré par DCM Projects
+-- USERS : Not managed by DCM Projects
 -- =============================================================================
--- DEFINE USER n'est PAS supporté par DCM Projects.
+-- DEFINE USER is NOT supported by DCM Projects.
 --
--- Stratégie de création des utilisateurs :
+-- User creation strategy :
 --
---   TYPE SERVICE (comptes de service)  → 1 PAR ENVIRONNEMENT
---     Raison : isolation sécurité — credentials séparés par env.
+--   SERVICE type (service accounts)  → 1 PER ENVIRONMENT
+--     Reason: security isolation — separate credentials per env.
 --     Ex : SVC_ECOM_LOADER_DEV_CLN / SVC_ECOM_LOADER_DEV / SVC_ECOM_LOADER (PROD)
 --
---   TYPE PERSON (utilisateurs humains) → 1 SEUL COMPTE SNOWFLAKE
---     Raison : une personne = un login. Les accès multi-env sont gérés
---     par des GRANTs de rôles (ECOM_ANALYST_DEV_CLN, ECOM_ANALYST_DEV, ECOM_ANALYST).
+--   PERSON type (human users) → 1 SINGLE SNOWFLAKE ACCOUNT
+--     Reason: one person = one login. Multi-env access is managed
+--     via role GRANTs (ECOM_ANALYST_DEV_CLN, ECOM_ANALYST_DEV, ECOM_ANALYST).
 --
--- Les utilisateurs sont créés via le script pre_scripts/01_create_users.sql,
--- exécuté APRÈS DCM DEPLOY (warehouses et rôles doivent exister).
--- Le warehouse DCM est utilisé pour l'exécution → traçabilité dans QUERY_HISTORY.
+-- Users are created via the pre_scripts/01_create_users.sql script,
+-- executed AFTER DCM DEPLOY (warehouses and roles must already exist).
+-- The DCM warehouse is used for execution → traceability in QUERY_HISTORY.
 -- =============================================================================

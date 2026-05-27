@@ -1,7 +1,7 @@
 -- =============================================================================
--- DATABASE + SCHEMA : domaine e-commerce
+-- DATABASE + SCHEMA : e-commerce domain
 -- =============================================================================
--- Objets créés par target :
+-- Objects created per target :
 --   PROD -> ECOM_DB + COMMERCE
 --   DEV  -> ECOM_DB_DEV + COMMERCE_DEV
 -- =============================================================================

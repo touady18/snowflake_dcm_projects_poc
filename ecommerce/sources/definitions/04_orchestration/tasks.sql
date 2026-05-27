@@ -1,9 +1,9 @@
 -- =============================================================================
--- TASKS : orchestration Snowflake via DCM Projects
+-- TASKS : Snowflake orchestration via DCM Projects
 -- =============================================================================
--- Oui, DCM Projects supporte les tasks via SQL DDL classique.
+-- DCM Projects supports tasks via standard SQL DDL.
 --
--- Les tasks sont definies en SUSPENDED pour un demarrage controle.
+-- Tasks are defined as SUSPENDED for controlled startup.
 -- =============================================================================
 
 define task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEALTHCHECK_CRON

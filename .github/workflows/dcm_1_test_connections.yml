@@ -1,19 +1,19 @@
 name: "DCM 1) Test Connections"
 
-# Déclenchement MANUEL uniquement depuis GitHub Actions > Run workflow
-# Permet de valider la connectivité Snowflake avant tout déploiement
+# MANUAL trigger only from GitHub Actions > Run workflow
+# Validates Snowflake connectivity before any deployment
 on:
   workflow_dispatch:
 
 permissions:
-  id-token: write   # requis pour l'authentification OIDC avec Snowflake
+  id-token: write   # required for OIDC authentication with Snowflake
   contents: read
 
 env:
-  DCM_PROJECT_PATH: ecommerce/                   # chemin depuis la racine du repo
+  DCM_PROJECT_PATH: ecommerce/                   # path from the repository root
 
 jobs:
-  # ── Étape 1 : lecture du manifest pour extraire la liste des targets ───────
+  # ── Step 1: read the manifest to extract the list of targets ───────────────
   PARSE_MANIFEST:
     runs-on: ubuntu-latest
     outputs:
@@ -26,15 +26,15 @@ jobs:
         with:
           project-path: ${{ env.DCM_PROJECT_PATH }}
 
-  # ── Étape 2 : test de connectivité pour chaque target (DCM_DEV, DCM_PROD) ─
+  # ── Step 2: connectivity test for each target (DCM_DEV, DCM_PROD) ─────────
   CONNECTION_TEST:
     needs: PARSE_MANIFEST
     runs-on: ubuntu-latest
     strategy:
       matrix:
         target: ${{ fromJson(needs.PARSE_MANIFEST.outputs.targets) }}
-      fail-fast: false    # tester tous les targets même si l'un échoue
-    environment: ${{ matrix.target }}   # nom = target manifest = GitHub Environment
+      fail-fast: false    # test all targets even if one fails
+    environment: ${{ matrix.target }}   # name = manifest target = GitHub Environment
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,4 +45,4 @@ jobs:
         with:
           target: ${{ matrix.target }}
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # résolu depuis l'environment GitHub du job
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the job's GitHub Environment
