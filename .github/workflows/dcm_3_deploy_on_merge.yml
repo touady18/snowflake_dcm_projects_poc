@@ -35,7 +35,6 @@ jobs:
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
           allow-drops: "false"          # safety: rejects DROP statements without explicit validation
-          post-scripts-path: "post_scripts"
           comment-on-pr: "true"
 
   # ── Merge on main : Deploy on PROD ────────────────────────────────────────
@@ -63,5 +62,4 @@ jobs:
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_PROD environment
           allow-drops: "false"
-          post-scripts-path: "post_scripts"
           comment-on-pr: "true"
