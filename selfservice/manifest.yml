@@ -1,0 +1,7 @@
+default_target: PROD
+
+targets:
+  PROD:
+    account_identifier: "JJNSNLN-LE94669"
+    project_name: "DCM_DB_POC.PROJECTS.DCM_SELFSERVICE"
+    project_owner: DCM_DEPLOYER_PROD

@@ -1,0 +1,6 @@
+
+DEFINE WAREHOUSE SELFSERVICE_WH
+  WAREHOUSE_SIZE = 'XSMALL'
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE
+  COMMENT = 'Warehouse for self-service analytics';
