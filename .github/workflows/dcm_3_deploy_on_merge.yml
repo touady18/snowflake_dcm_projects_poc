@@ -34,7 +34,6 @@ jobs:
           target: DCM_DEV
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
-          post-scripts-path: hooks/
           comment-on-pr: "true"
 
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
@@ -63,7 +62,6 @@ jobs:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_PROD environment
-          post-scripts-path: hooks/
           comment-on-pr: "true"
 
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
