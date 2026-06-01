@@ -35,6 +35,7 @@ jobs:
           target: DCM_DEV
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
+          post-scripts-path: hooks/
           comment-on-pr: "true"
 
   # DCM PLAN on PROD: previews what merging into main would deploy
@@ -53,4 +54,5 @@ jobs:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_PROD environment
+          post-scripts-path: hooks/
           comment-on-pr: "true"
