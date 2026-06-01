@@ -1,0 +1,42 @@
+name: "DCM SelfService Deploy to PROD"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'selfservice/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  DCM_PROJECT_PATH: selfservice/
+  SNOWFLAKE_USER: DCM_DEPLOYER_PROD   # même user que ton PROD ecommerce
+
+jobs:
+  DEPLOY_PROD:
+    runs-on: ubuntu-latest
+    environment: DCM_PROD             # réutilise ton environnement GitHub existant
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        with:
+          target: PROD
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          create-if-not-exists: "true"
+
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
+        with:
+          target: PROD
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          allow-drops: "false"
+          test-expectations: "false"
+          comment-on-pr: "true"
