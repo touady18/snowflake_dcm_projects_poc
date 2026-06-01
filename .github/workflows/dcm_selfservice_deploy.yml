@@ -29,14 +29,14 @@ jobs:
         with:
           target: PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}
           create-if-not-exists: "true"
 
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
         with:
           target: PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
-          snowflake-user: ${{ env.SNOWFLAKE_USER }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}
           allow-drops: "false"
           test-expectations: "false"
           comment-on-pr: "true"
