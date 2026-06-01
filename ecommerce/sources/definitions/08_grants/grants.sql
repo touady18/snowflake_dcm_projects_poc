@@ -59,3 +59,5 @@ grant operate on task ECOM_DB{{ env_suffix }}.COMMERCE{{ env_suffix }}.TASK_HEAL
 -- MONITOR in the project
 GRANT MONITOR ON DCM PROJECT DCM_DB_POC.PROJECTS.ECOM_PROJECT{{ env_suffix }} TO ROLE {{ owner }};
 -- GRANT MONITOR ON DCM PROJECT DCM_DB_POC.PROJECTS.ECOM_PROJECT_PROD TO ROLE DCM_DEPLOYER_PROD;
+-- Need to add some grants
+-- Add another comments to test my pipeline

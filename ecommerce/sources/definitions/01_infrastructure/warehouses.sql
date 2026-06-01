@@ -11,8 +11,7 @@
 -- =============================================================================
 
 
--- Warehouse dedicated to raw data ingestion
--- Used by ELT connectors (Fivetran, Airbyte) and COPY INTO scripts
+-- Warehouse dedicated per environment
 define warehouse ECOM_WH{{ env_suffix }}
   with
     warehouse_size = '{{ wh_size}}'

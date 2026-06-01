@@ -28,14 +28,22 @@ jobs:
         with:
           persist-credentials: false
 
+      - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-plan@v1
+        id: plan
+        with:
+          target: DCM_DEV
+          project-path: ${{ env.DCM_PROJECT_PATH }}
+          snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
+          comment-on-pr: "true"
+
       - uses: Snowflake-Labs/snowflake_dcm_projects/actions/dcm-deploy@v1
         id: deploy
         with:
           target: DCM_DEV
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_DEV environment
+          post-scripts-path: hooks/
           allow-drops: "false"          # safety: rejects DROP statements without explicit validation
-          post-scripts-path: "post_scripts"
           comment-on-pr: "true"
 
   # ── Merge on main : Deploy on PROD ────────────────────────────────────────
@@ -62,6 +70,6 @@ jobs:
           target: DCM_PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}  # resolved from the DCM_PROD environment
+          post-scripts-path: hooks/
           allow-drops: "false"
-          post-scripts-path: "post_scripts"
           comment-on-pr: "true"
