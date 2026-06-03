@@ -1,0 +1,10 @@
+manifest_version: 2
+type: DCM_PROJECT
+
+default_target: PROD
+
+targets:
+  PROD:
+    account_identifier: "JJNSNLN-LE94669"
+    project_name: "DCM_DB_POC.PROJECTS.DCM_TEST_CASES"
+    project_owner: DCM_DEPLOYER_PROD
