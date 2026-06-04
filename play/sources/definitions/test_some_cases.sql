@@ -7,6 +7,8 @@ DEFINE SCHEMA  DCM_TEST_CASES.test_cases;
 -- Create table
 DEFINE TABLE  DCM_TEST_CASES.test_cases.some_cases (
     id INT,
-    name STRING,
-    description STRING
+    name VARCHAR,
+    description VARCHAR,
+    test_new_column VARCHAR(50)  -- new column added for testing purposes
+
 );
