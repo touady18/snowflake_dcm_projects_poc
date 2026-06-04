@@ -1,4 +1,4 @@
-name: "DCM SelfService Deploy to PROD"
+name: "DCM DEMO Deploy to PROD"
 
 on:
   push:
