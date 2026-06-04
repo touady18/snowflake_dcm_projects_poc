@@ -37,7 +37,6 @@ jobs:
           target: PROD
           project-path: ${{ env.DCM_PROJECT_PATH }}
           snowflake-user: ${{ vars.SNOWFLAKE_USER }}
-          post-scripts-path: hooks/
           allow-drops: "false"
           test-expectations: "false"
           comment-on-pr: "true"
