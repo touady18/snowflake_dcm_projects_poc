@@ -8,7 +8,7 @@ DEFINE SCHEMA  DCM_TEST_CASES.test_cases;
 DEFINE TABLE  DCM_TEST_CASES.test_cases.some_cases (
     id INT,
     name VARCHAR,
-    description VARCHAR,
-    test_new_column VARCHAR(50)  -- new column added for testing purposes
+    description VARCHAR
+    --,test_new_column VARCHAR(50)  -- new column added for testing purposes
 
 );
