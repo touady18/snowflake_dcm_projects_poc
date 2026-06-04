@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 env:
-  DCM_PROJECT_PATH: play/
+  DCM_PROJECT_PATH: play_demo/
   SNOWFLAKE_USER: DCM_DEPLOYER_PROD   # same user as PROD ecommerce
 
 jobs:
